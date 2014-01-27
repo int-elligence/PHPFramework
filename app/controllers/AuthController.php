@@ -6,4 +6,8 @@ class AuthController extends MainController
 	{
 		$this->renderView("hello");
 	}
+	public function home()
+	{
+		$this->redirect("AuthController@test");
+	}
 }

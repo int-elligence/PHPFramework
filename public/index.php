@@ -10,6 +10,8 @@ require "../bootstrap.php";
 
 require "../app/routes.php";
 
+require "../app/config/config.php";
+
 // Let's add a / to the beginning of the $_GET['url']
 
 $_GET['url'] = '/'.$_GET['url'];
