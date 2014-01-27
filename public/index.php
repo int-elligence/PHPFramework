@@ -10,6 +10,10 @@ require "../app/routes.php";
 
 $_GET['url'] = '/'.$_GET['url'];
 
+// Get rid of the / at the end of the URL to add flexibility...  
+
+$_GET['url'] = rtrim($_GET['url'], '/');
+
 // Returns the controller and the action separated by @
 $controllerAction = explode('@', $route->getRoute($_GET['url']));
 

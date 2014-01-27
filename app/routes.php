@@ -7,6 +7,7 @@ class Route
 	protected $routes = array();
 	public function add($route, $action)
 	{
+		$route = rtrim($route, '/');
 		$this->routes[$route] = $action;
 		return true;
 	}
