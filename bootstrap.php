@@ -7,11 +7,11 @@ define('ROOT', dirname(dirname(__FILE__)).'/framework');
 
 // Include the MainController so extends works
 include "app/controllers/MainController.php";
-//include(ROOT . DS . 'app' . DS . 'controllers' . DS . 'MainController.php');
 
-// Define the root URL
-
+// Require The Library dependencies 
 require "app/library/Route.php";
+require "app/library/Input.php";
+
 
 // define the url() function, so url's can be made in views
 

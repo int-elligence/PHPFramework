@@ -10,4 +10,13 @@ class AuthController extends MainController
 	{
 		$this->redirect("AuthController@test");
 	}
+	public function post()
+	{
+		$name = Input::get('name');
+
+		$variables = array(
+			'name'=>$name
+		);
+		$this->renderView("afterPost", $variables);
+	}
 }

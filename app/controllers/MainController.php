@@ -9,8 +9,12 @@ class MainController
 	{
 		$this->variables = array();
 	}
-	public function renderView($view)
+	public function renderView($view, $variables=array())
 	{
+		foreach ($variables as $var_name=>$value)
+		{	
+			$$var_name = $value;
+		}
 		if (file_exists("../app/views/$view.php"))
 		{
 			include "../app/views/$view.php";

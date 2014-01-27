@@ -4,6 +4,8 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 
+
+
 // Require the bootstrapper
 
 require "../bootstrap.php";
@@ -11,6 +13,12 @@ require "../bootstrap.php";
 require "../app/routes.php";
 
 require "../app/config/config.php";
+
+function action($controllerAction)
+{
+	global $route;
+	return WEBROOT.$route->searchByControllerAction($controllerAction);
+}
 
 // Let's add a / to the beginning of the $_GET['url']
 
@@ -35,3 +43,4 @@ include("../app/controllers/$controller.php");
 
 $controller = new $controller;
 $controller->$action();
+

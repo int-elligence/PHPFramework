@@ -1,5 +1,6 @@
 <?php
 
-$route->add('/', 'Array@index');
-$route->add('/home', 'AuthController@home');
+$route->add('/', 'AuthController@home');
 $route->add('/test', 'AuthController@test');
+
+$route->add('/post', 'AuthController@post');
