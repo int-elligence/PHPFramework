@@ -4,6 +4,10 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 
+// Require the bootstrapper
+
+require "../bootstrap.php";
+
 require "../app/routes.php";
 
 // Let's add a / to the beginning of the $_GET['url']
@@ -23,4 +27,9 @@ $controller = $controllerAction[0];
 
 $action = $controllerAction[1];
 
-echo "This is referencing ". $controller.' at '.$action;
+// Include the appropriate controller
+//print(ROOT . DS . 'app' . DS . 'controllers' . DS . $controller . '.php') or die('could not include');
+include("../app/controllers/$controller.php");
+
+$controller = new $controller;
+$controller->$action();
