@@ -4,6 +4,7 @@ class AuthController extends MainController
 {
 	public function test()
 	{
+		$db = new DB;
 		$this->renderView("hello");
 	}
 	public function home()
@@ -12,11 +13,15 @@ class AuthController extends MainController
 	}
 	public function post()
 	{
-		$name = Input::get('name');
-
+		Form::required(Input::all());
 		$variables = array(
-			'name'=>$name
+			'name'=>Input::get('name')
 		);
 		$this->renderView("afterPost", $variables);
+	}
+	public function many()
+	{
+		$db = new DB;
+		$user = new User;
 	}
 }

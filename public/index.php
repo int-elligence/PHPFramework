@@ -14,6 +14,13 @@ require "../app/routes.php";
 
 require "../app/config/config.php";
 
+// Include all the models
+
+foreach (glob("../app/models/*.php") as $file)
+{
+	include $file;
+}
+
 function action($controllerAction)
 {
 	global $route;
