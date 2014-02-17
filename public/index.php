@@ -4,8 +4,7 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 
-
-
+session_start();
 // Require the bootstrapper
 
 require "../bootstrap.php";
@@ -27,13 +26,30 @@ function action($controllerAction)
 	return WEBROOT.$route->searchByControllerAction($controllerAction);
 }
 
+
+// Define the asset() function
+function asset($file)
+{
+	echo WEBROOT.'/public/'.$file;
+}
+
 // Let's add a / to the beginning of the $_GET['url']
+
+// Also, check to see if the user just entered the root directory /
+
+if (!isset($_GET['url']))
+{
+	$_GET['url'] = "";
+}
 
 $_GET['url'] = '/'.$_GET['url'];
 
 // Get rid of the / at the end of the URL to add flexibility...  
 
-$_GET['url'] = rtrim($_GET['url'], '/');
+if ($_GET['url'] != "/")
+{
+	$_GET['url'] = rtrim($_GET['url'], '/');
+}
 
 // Returns the controller and the action separated by @
 $controllerAction = explode('@', $route->getRoute($_GET['url']));
