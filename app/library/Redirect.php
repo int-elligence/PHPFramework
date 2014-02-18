@@ -9,4 +9,9 @@ class Redirect
 		$redirectURI = WEBROOT.$redirectURI;
 		header("Location: $redirectURI");
 	}
+	public static function to($url)
+	{
+		$uri = WEBROOT.$url;
+		header("Location: $uri");
+	}
 }

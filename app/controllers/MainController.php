@@ -27,6 +27,17 @@ class MainController
 			// Parse the file for blade-esque terms
 			$file_contents = str_replace('}}', ';?>', $file_contents);
 			$file_contents = str_replace('{{', '<?=', $file_contents);
+
+			$startTemplate = strpos($file_contents, "@extends('")+10;
+			$endtemplate = strpos($file_contents, "')", $startTemplate)-2;
+			$template = substr($file_contents, $startTemplate, ($endtemplate-$startTemplate)+2);
+
+			$templateString = "@extends('".$template."')";
+			$file_contents = str_replace($templateString, "", $file_contents);
+			$templateFile = "../app/views/$template.php";
+			$templateContents = file_get_contents($templateFile);
+			// Search the template file for yield('content')
+			$file_contents = str_replace("@yield('content')", $file_contents, $templateContents);
 			file_put_contents("../cache/tmp/temp.php", $file_contents);
 			include "../cache/tmp/temp.php";
 		}

@@ -23,4 +23,8 @@ class Auth
 		$id = $userObject[0]->id;
 		$_SESSION['id'] = $id;
 	}
+	public static function getUser()
+	{
+		$id = $_SESSION['id'];
+	}
 }

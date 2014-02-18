@@ -14,8 +14,7 @@
 				<li><a href="#">Framework</a>
 			</ol>
 			<br />
-			<h1>
-Welcome to My Framework!</h1>
+			<h1>@yield('content')</h1>
 			<br />
 			<h3>Copyright Elliot Anderson 2014 &copy;</h3>
 			<br />

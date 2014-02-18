@@ -16,6 +16,7 @@ require "app/library/Form.php";
 require "app/library/Session.php";
 require "app/library/Auth.php";
 require "app/library/Redirect.php";
+require "app/filters.php";
 
 // define the url() function, so url's can be made in views
 

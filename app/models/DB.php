@@ -63,4 +63,17 @@ class DB
 
 		return $result;
 	}
+	public static function find($integer)
+	{
+		global $conn;
+		$class = get_called_class();
+		$$class = new $class;
+		$table = $$class->table;
+		$stmt = $conn->prepare('SELECT * FROM '.$table.' WHERE `id`='.$integer);
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+		return $result;
+	}
+
 }
