@@ -7,7 +7,7 @@ $dbCreds = array(
 	'host'=>'localhost',
 	'user'=>'root',
 	'password'=>'password',
-	'database'=>'dbname'
+	'database'=>'database'
 );
 
 

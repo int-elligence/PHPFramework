@@ -7,16 +7,22 @@ class Form
 		{
 			foreach($variable as $variable)
 			{
+				$variable = Input::get($variable);
 				if (empty($variable))
 				{
 					header('Location: '.$_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
-		if (empty($variable))
+		else
 		{
-			header('Location: '.$_SERVER['HTTP_REFERER']);
+			$variable = Input::get($variable);
+			if (empty($variable))
+			{
+				header('Location: '.$_SERVER['HTTP_REFERER']);
+			}
 		}
+
 	}
 }
 

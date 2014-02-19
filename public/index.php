@@ -39,17 +39,55 @@ function asset($file)
 
 if (!isset($_GET['url']))
 {
-	$_GET['url'] = "";
+	$_GET['url'] = '';
 }
 
 $_GET['url'] = '/'.$_GET['url'];
 
 // Get rid of the / at the end of the URL to add flexibility...  
 
-if ($_GET['url'] != "/")
+if ($_GET['url'] != '/')
 {
 	$_GET['url'] = rtrim($_GET['url'], '/');
 }
+
+if (!$route->routeExists($_GET['url']))
+{
+	// Let's check to see if the route parameter
+	// exists.
+	$currentRoute = explode('/', $_GET['url']);
+	$size = count($currentRoute);
+
+	// Ignore the first part, it will be empty,
+	// The second part will be the model we are looking 
+	// for, then the third part will be the parameter
+	$i = 1;
+	$baseURI = '/';
+	while ($i < $size-1)
+	{
+		$baseURI .= $currentRoute[$i].'/';
+		$i++;
+	}
+	if ($route->routeExists($baseURI))
+	{
+		$parameter = $currentRoute[$size-1];
+		$controllerAction = $route->getRoute($baseURI);
+		$controllerAction = explode("@", $controllerAction);
+		$controller = $controllerAction[0];
+		$action = $controllerAction[1];
+		include("../app/controllers/$controller.php");
+		$controller = new $controller;
+		$controller->$action($parameter);
+	}
+	else
+	{
+		// route does not exist
+		trigger_error('Route '.$_GET['url'].' does not exist', E_USER_ERROR);
+	}
+}
+
+else
+{ // The route exists, we can play nicely
 
 // Returns the controller and the action separated by @
 $controllerAction = explode('@', $route->getRoute($_GET['url']));
@@ -66,4 +104,4 @@ include("../app/controllers/$controller.php");
 
 $controller = new $controller;
 $controller->$action();
-
+}

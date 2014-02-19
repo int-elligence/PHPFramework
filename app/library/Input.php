@@ -8,6 +8,6 @@ class Input
 	}
 	public static function all()
 	{
-		return $_REQUEST;
+		return $_POST;
 	}
 }

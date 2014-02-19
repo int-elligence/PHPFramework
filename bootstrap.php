@@ -10,6 +10,7 @@ include "app/controllers/MainController.php";
 
 
 // Require The Library dependencies 
+require "app/library/Hash.php";
 require "app/library/Route.php";
 require "app/library/Input.php";
 require "app/library/Form.php";

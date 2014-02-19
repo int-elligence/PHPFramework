@@ -18,13 +18,21 @@ class Auth
 	{
 		unset($_SESSION['id']);
 	}
-	public static function login($userObject)
+	public static function login($email, $password)
 	{
-		$id = $userObject[0]->id;
-		$_SESSION['id'] = $id;
+		$password = Hash::make($password);
+		$user = DB::raw("SELECT * FROM users WHERE email='$email' AND password='$password'");
+		var_dump($user);
 	}
 	public static function getUser()
 	{
+		if (!isset($_SESSION['id']))
+		{
+			// The user is not logged in, return false
+			return false;
+		}
+		// the user is logged in, return the user object
 		$id = $_SESSION['id'];
+		return User::find($id);
 	}
 }

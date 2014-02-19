@@ -7,7 +7,7 @@ class Filter
 		if (!Auth::check())
 		{
 			// Enter your Action redirect if the User Authentication failed
-			Redirect::action("HomeController@home");
+			
 		}
 		else
 		{
