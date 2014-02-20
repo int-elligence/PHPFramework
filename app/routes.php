@@ -1,3 +1,5 @@
 <?php
 
-$route->add('/', 'HomeController@home');
+Route::get('/', 'HomeController@home');
+
+Route::post('/', 'HomeController@handleForm');

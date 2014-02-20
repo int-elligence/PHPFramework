@@ -15,7 +15,11 @@
 			</ol>
 			<br />
 			<h1>
-Welcome to My Framework!</h1>
+<form action="<?=action('HomeController@handleForm');?>" method="POST">
+<input type="text" name="first_name" placeholder="First Name" class="form-control" />
+<br />
+<input type="submit" value="Submit" class="btn btn-primary">
+</form></h1>
 			<br />
 			<h3>Copyright Elliot Anderson 2014 &copy;</h3>
 			<br />

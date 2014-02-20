@@ -5,18 +5,19 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(dirname(__FILE__)).'/framework');
 
-require "app/library/Controllers/MainController.php";
-require "app/library/Models/DB.php";
+include "app/global/functions.php";
+include "app/library/Controllers/MainController.php";
+include "app/library/Models/DB.php";
 
-// Require The Library dependencies 
-require "app/library/Hash.php";
-require "app/library/Route.php";
-require "app/library/Input.php";
-require "app/library/Form.php";
-require "app/library/Session.php";
-require "app/library/Auth.php";
-require "app/library/Redirect.php";
-require "app/filters.php";
+// include The Library dependencies 
+include "app/library/Hash.php";
+include "app/library/Route.php";
+include "app/library/Input.php";
+include "app/library/Form.php";
+include "app/library/Session.php";
+include "app/library/Auth.php";
+include "app/library/Redirect.php";
+include "app/filters.php";
 
 
 // define the url() function, so url's can be made in views

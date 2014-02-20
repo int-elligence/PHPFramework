@@ -107,7 +107,7 @@ class DB
 		$table = $$class->table;
 		$stmt = $conn->prepare('SELECT * FROM '.$table.' WHERE `id`='.$integer);
 		$stmt->execute();
-		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
 
 		return $result;
 	}
