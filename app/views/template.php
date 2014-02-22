@@ -17,7 +17,6 @@
 			<h1>@yield('content')</h1>
 			<br />
 			<h3>Copyright Elliot Anderson 2014 &copy;</h3>
-			<h5>Made by OG Loc, Rich Homie Quan, French Montana, and Eli Shwemler</h5>
 			<br />
 			<h6>Version 0.1.1</h6>
 		</div>

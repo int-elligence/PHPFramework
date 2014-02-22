@@ -274,9 +274,47 @@ class DB
 		$model = new $modelName;
 		$foreign_table = $model->table;
 		$current_table = $this->table;
-		$foreign_name = strtolower($modelName).'_id';
-		$current_name = strtolower(get_called_class()).'_id';
+
+		// get the name of the pivot table
+		$foreign_name = strtolower($modelName);
+		$current_name = strtolower(get_called_class());
+		$model_names = array($foreign_name, $current_name);
+		asort($model_names);
+		$pivot_table_name = implode('_', $model_names);	
+
+		$current_index = $current_name.'_id';
+		$foreign_index = $foreign_name.'_id';
+
+		$current_id = $this->id;	
+
+		$query = "SELECT $foreign_index FROM $pivot_table_name WHERE $current_index=$current_id";
+		$stmt = $conn->prepare($query);
+		$stmt->execute();
+		$foreign_ids = $stmt->fetchAll(PDO::FETCH_OBJ);
 		
+		$for_in = "(";
+		$count = 1;
+		foreach ($foreign_ids as $obj)
+		{
+			if ($count != 1)
+			{
+				$for_in .= ',';
+			}
+			$for_in .= $obj->$foreign_index;
+			$count++;
+		}
+		$for_in .= ")";
+		$query = "SELECT * FROM $foreign_table WHERE id IN $for_in";
+		$stmt = $conn->prepare($query);
+		$stmt->execute();
+		$returns = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+		foreach ($returns as $key=>$obj)
+		{
+			$returns[$key] = new $modelName($obj); 
+		}
+
+		return $returns;
 	}
 
 }
