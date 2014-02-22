@@ -17,8 +17,8 @@ include "app/library/Form.php";
 include "app/library/Session.php";
 include "app/library/Auth.php";
 include "app/library/Redirect.php";
+include "app/library/File.php";
 include "app/filters.php";
-
 
 // define the url() function, so url's can be made in views
 

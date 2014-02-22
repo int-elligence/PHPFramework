@@ -36,7 +36,7 @@ class DB
 			// This is an existing database entry
 			// Get all the col names/values and
 			// set them
-			foreach($object[0] as $col=>$val)
+			foreach($object as $col=>$val)
 			{
 				$this->$col = $val;
 			}
@@ -75,7 +75,10 @@ class DB
 		$returnArray = [];
 		
 		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-		
+		foreach ($result as $key=>$obj)
+		{
+			$result[$key] = new $class($obj);
+		}
 		return $result;
 	}
 	public static function where($column, $operator, $value)
@@ -88,6 +91,10 @@ class DB
 		$stmt = $conn->prepare('SELECT * FROM `'.$table.'` WHERE `'.$column.'`'.$operator.$value);
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+		foreach ($result as $key=>$obj)
+		{
+			$result[$key] = new $class($obj);
+		}
 		return $result;
 	}
 	public static function raw($query)
@@ -108,8 +115,8 @@ class DB
 		$stmt = $conn->prepare('SELECT * FROM '.$table.' WHERE `id`='.$integer);
 		$stmt->execute();
 		$result = $stmt->fetch(PDO::FETCH_OBJ);
-
-		return $result;
+		$newobject = new $class($result);
+		return $newobject;
 	}
 
 	public function getObject()
@@ -207,7 +214,10 @@ class DB
 		$query = "SELECT * FROM $foreign_table WHERE $current_name=$current_id";
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
-		return $stmt->fetch(PDO::FETCH_OBJ);
+		$object =  $stmt->fetch(PDO::FETCH_OBJ);
+
+		// lets return an instance of that class
+		$newobject = new $modelName($object);
 	}
 	public function belongsTo($modelName)
 	{
@@ -219,7 +229,9 @@ class DB
 		$query = "SELECT * FROM $foreign_table WHERE id=$current_foreign_key";
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
-		return $stmt->fetch(PDO::FETCH_OBJ);
+		$object = $stmt->fetch(PDO::FETCH_OBJ);
+		$newobject = new $modelName($object);
+		return $newobject;
 	}
 	public function hasMany($modelName)
 	{
@@ -231,7 +243,13 @@ class DB
 		$query = "SELECT * FROM $foreign_table WHERE $current_name=$current_id";
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_OBJ);
+		$returns =  $stmt->fetchAll(PDO::FETCH_OBJ);
+		foreach ($returns as $key=>$obj)
+		{
+			$returns[$key] = new $modelName($obj);
+		}
+
+		return $returns;
 
 	}
 	public function belongsToMany($modelName)
@@ -244,7 +262,11 @@ class DB
 		$query = "SELECT * FROM $foreign_table WHERE id=$current_foreign_key";
 		$stmt = $conn->prepare($query);
 		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_OBJ);
+		$returns =  $stmt->fetchAll(PDO::FETCH_OBJ);
+		foreach ($returns as $key=>$obj)
+		{
+			$returns[$key] = new $modelName($obj);
+		}
 	}
 	public function manyToMany($modelName)
 	{

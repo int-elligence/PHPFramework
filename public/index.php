@@ -1,5 +1,22 @@
 <?php
 
+function exception_handler($exception)
+{
+	ob_start();
+	include "../app/views/error.php";
+	$file_contents = ob_get_contents();
+	ob_end_clean();
+	$file_contents = str_replace('}}', ';?>', $file_contents);
+	$file_contents = str_replace('{{', '<?=', $file_contents);
+	file_put_contents("../cache/tmp/error.php", $file_contents);
+	include "../cache/tmp/error.php";
+	unlink("../cache/tmp/error.php");
+}	
+
+// set the function above to the default exception handler
+
+set_exception_handler('exception_handler');
+
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
@@ -7,11 +24,11 @@ error_reporting(-1);
 session_start();
 // Require the bootstrapper
 
-require "../bootstrap.php";
+include "../bootstrap.php";
 
-require "../app/routes.php";
+include "../app/routes.php";
 
-require "../app/config/config.php";
+include "../app/config/config.php";
 
 // Include all the models
 
@@ -19,7 +36,6 @@ foreach (glob("../app/models/*.php") as $file)
 {
 	include $file;
 }
-
 function action($controllerAction)
 {
 	global $route;
@@ -63,11 +79,19 @@ if (!$route->routeExists($_GET['url']))
 	// for, then the third part will be the parameter
 	$i = 1;
 	$baseURI = '/';
-	while ($i < $size-1)
+	if ($i == 1)
 	{
-		$baseURI .= $currentRoute[$i].'/';
-		$i++;
+		$baseURI .= $currentRoute[1].'/';
 	}
+	else
+	{
+		while ($i < $size-1)
+		{
+			$baseURI .= $currentRoute[$i].'/';
+			$i++;
+		}
+	}
+
 	if ($route->routeExists($baseURI))
 	{
 		$parameter = $currentRoute[$size-1];
@@ -82,7 +106,8 @@ if (!$route->routeExists($_GET['url']))
 	else
 	{
 		// route does not exist
-		trigger_error('Route '.$_GET['url'].' does not exist', E_USER_ERROR);
+		//trigger_error('Route '.$_GET['url'].' does not exist', E_USER_ERROR);
+		throw new Exception("Route ".$_GET['url']." does not exist");
 	}
 }
 
@@ -104,4 +129,12 @@ include("../app/controllers/$controller.php");
 
 $controller = new $controller;
 $controller->$action();
+}
+
+// After this, we want to delete the view, so 
+// if there is an error, they will not be brought
+// to this screen
+if (file_exists("../cache/tmp/temp.php"))
+{
+	unlink("../cache/tmp/temp.php");
 }
