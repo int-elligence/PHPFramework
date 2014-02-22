@@ -15,13 +15,10 @@
 			</ol>
 			<br />
 			<h1>
-<form action="<?=action('HomeController@handleForm');?>" method="POST">
-<input type="text" name="first_name" placeholder="First Name" class="form-control" />
-<br />
-<input type="submit" value="Submit" class="btn btn-primary">
-</form></h1>
+Welcome to my Framework!</h1>
 			<br />
 			<h3>Copyright Elliot Anderson 2014 &copy;</h3>
+			<h5>Made by OG Loc, Rich Homie Quan, French Montana, and Eli Shwemler</h5>
 			<br />
 			<h6>Version 0.1.1</h6>
 		</div>
