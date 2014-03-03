@@ -316,5 +316,9 @@ class DB
 
 		return $returns;
 	}
-
+	public function inGroup($groupName)
+	{
+		$id = $this->id;
+		$groups = $this->hasMany('Group');
+	}
 }

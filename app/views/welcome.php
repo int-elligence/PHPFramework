@@ -1,2 +1,4 @@
 @extends('template')
-Welcome to my Framework!
+<form action="{{action('HomeController@post')}}" method="POST">
+	<input type="submit" value="Submit" class="btn btn-primary">
+</form>

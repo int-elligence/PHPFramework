@@ -38,6 +38,9 @@ class MainController
 			$templateContents = file_get_contents($templateFile);
 			// Search the template file for yield('content')
 			$file_contents = str_replace("@yield('content')", $file_contents, $templateContents);
+			$file_contents = str_replace('}}', ';?>', $file_contents);
+			$file_contents = str_replace('{{', '<?=', $file_contents);
+
 			file_put_contents("../cache/tmp/temp.php", $file_contents);
 			include "../cache/tmp/temp.php";
 		}

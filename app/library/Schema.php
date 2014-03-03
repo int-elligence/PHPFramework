@@ -147,8 +147,8 @@ class Schema
 			}
 		}
 		// Now let's actually run their query
-		//die(var_dump($this->query));
 		global $conn;
+
 		$stmt = $conn->prepare($this->query);
 		$stmt->execute();
 
