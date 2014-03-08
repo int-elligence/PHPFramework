@@ -14,4 +14,8 @@ class Redirect
 		$uri = WEBROOT.$url;
 		header("Location: $uri");
 	}
+	public static function back()
+	{
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
+	}
 }

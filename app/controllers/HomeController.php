@@ -6,5 +6,4 @@ class HomeController extends MainController
 	{
 		return $this->renderView("welcome");
 	}
-
 }

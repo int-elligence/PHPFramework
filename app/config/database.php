@@ -6,8 +6,8 @@ mysql connection information
 $dbCreds = array(
 	'host'=>'localhost',
 	'user'=>'root',
-	'password'=>'Nsr10ojif??',
-	'database'=>'framework'
+	'password'=>'password',
+	'database'=>'database'
 );
 
 

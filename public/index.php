@@ -13,6 +13,7 @@ function exception_handler($exception)
 	unlink("../cache/tmp/error.php");
 }	
 
+
 // set the function above to the default exception handler
 
 set_exception_handler('exception_handler');
@@ -114,27 +115,39 @@ if (!$route->routeExists($_GET['url']))
 else
 { // The route exists, we can play nicely
 
-// Returns the controller and the action separated by @
-$controllerAction = explode('@', $route->getRoute($_GET['url']));
-
-//Explode the controller action to get the Controller and the Action it is referencing
-
-$controller = $controllerAction[0];
-
-$action = $controllerAction[1];
-
-// Include the appropriate controller
-//print(ROOT . DS . 'app' . DS . 'controllers' . DS . $controller . '.php') or die('could not include');
-include("../app/controllers/$controller.php");
-
-$controller = new $controller;
-$controller->$action();
-}
-
-// After this, we want to delete the view, so 
-// if there is an error, they will not be brought
-// to this screen
-if (file_exists("../cache/tmp/temp.php"))
+// Check to see if the route is a closure
+if (substr($route->getRoute($_GET['url']), 0, 7) == 'Closure')
 {
-	unlink("../cache/tmp/temp.php");
+	var_dump("closure");
 }
+
+else
+{
+
+	// Returns the controller and the action separated by @
+
+	$controllerAction = explode('@', $route->getRoute($_GET['url']));
+
+	//Explode the controller action to get the Controller and the Action it is referencing
+
+	$controller = $controllerAction[0];
+
+	$action = $controllerAction[1];
+
+	// Include the appropriate controller
+	//print(ROOT . DS . 'app' . DS . 'controllers' . DS . $controller . '.php') or die('could not include');
+	include("../app/controllers/$controller.php");
+
+		$controller = new $controller;
+		$controller->$action();
+	}
+
+	// After this, we want to delete the view, so 
+	// if there is an error, they will not be brought	
+	// to this screen
+	if (file_exists("../cache/tmp/temp.php"))
+	{
+		//unlink("../cache/tmp/temp.php");
+	}	
+}
+

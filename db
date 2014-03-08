@@ -4,7 +4,20 @@
 // Inlcude the db Class
 
 include "app/config/database.php";
-include "app/library/Models/DB.php";
+
+$host = $dbCreds['host'];
+$userN = $dbCreds['user'];
+$pass = $dbCreds['password'];
+$database = $dbCreds['database'];
+
+try
+{
+	$conn = new PDO('mysql:host='.$host.';dbname='.$database, $userN, $pass);
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e)
+{
+	echo "ERROR: Database Not Configured";
+}
 
 // create the migrations table if it doesn't already
 // exist

@@ -19,6 +19,7 @@ include "app/library/Auth.php";
 include "app/library/Redirect.php";
 include "app/library/File.php";
 include "app/filters.php";
+include "app/library/Validator.php";
 
 // define the url() function, so url's can be made in views
 

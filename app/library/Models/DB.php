@@ -12,7 +12,7 @@ try
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) 
 {
-	echo "DATABASE ERROR: ".$e->getMessage();
+	throw new Exception($e->getMessage());
 }
 
 class DB
