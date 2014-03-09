@@ -316,6 +316,25 @@ class DB
 
 		return $returns;
 	}
+	public function attach($object)
+	{
+		global $conn;
+		$currentClass = strtolower(get_called_class());
+		$foreignClass = strtolower(get_class($object));
+		$classes = array($currentClass, $foreignClass);
+		asort($classes);
+		$pivot_table_name = implode('_', $classes);
+
+		$current_key = strtolower($currentClass).'_id';
+		$foreign_key = strtolower($foreignClass).'_id';
+
+		$current_id = $this->id;
+		$foreign_id = $object->id;
+
+		$query = "INSERT INTO $pivot_table_name ($current_key, $foreign_key) VALUES($current_id, $foreign_id)";
+		$stmt = $conn->prepare($query);
+		$stmt->execute();
+	}
 	public function inGroup($groupName)
 	{
 		$id = $this->id;
