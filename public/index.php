@@ -13,7 +13,6 @@ function exception_handler($exception)
 	unlink("../cache/tmp/error.php");
 }	
 
-
 // set the function above to the default exception handler
 
 set_exception_handler('exception_handler');
@@ -23,7 +22,8 @@ ini_set('display_startup_errors',1);
 error_reporting(-1);
 
 session_start();
-// Require the bootstrapper
+
+// Require the bootstrap
 
 include "../bootstrap.php";
 
